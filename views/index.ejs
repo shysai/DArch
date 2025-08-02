@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Digital Library</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #f0f0f0;
+            padding: 10px;
+            overflow-y: auto;
+            border-right: 2px solid #ccc;
+        }
+        .book-cover {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            background: #d1d1d1;
+            border: 1px solid #855555;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .book-cover:hover {
+            background: #956060;
+        }
+        .viewer {
+            flex-grow: 1;
+            background: #676666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        iframe {
+            width: 90%;
+            height: 90%;
+            border: none;
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>My Books</h3>
+    <% pdfFiles.forEach(function(file) { %>
+        <div class="book-cover" onclick="openPDF('<%= file %>')">
+            <%= file.replace('.pdf', '').replace(/_/g, ' ').toUpperCase() %>
+        </div>
+    <% }); %>
+</div>
+
+<div class="viewer" id="pdfViewer">
+    <p>Select a book to view</p>
+</div>
+
+<script>
+    function openPDF(fileName) {
+        const viewer = document.getElementById('pdfViewer');
+        viewer.innerHTML = `<iframe src="/pdfs/${fileName}"></iframe>`;
+    }
+</script>
+
+</body>
+</html>
